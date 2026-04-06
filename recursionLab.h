@@ -9,13 +9,18 @@ using namespace std;
 //          lineOfStars(0) returns ""
 // You may not use a loop.
 string lineOfStars(int n) {
-	return "fixme";
+	if (n <= 0) return "";
+    return "*" + lineOfStars(n - 1);
+
 }
 
 // Write a function power() that will
 //    compute the x to the power of n recursively
 // if the power is invalid, return 0
 float power(float x, int n) {
+	 if (n < 0) return 0;       
+    if (n == 0) return 1; 
+    return x * power(x, n - 1);
 	return -1;	
 }
 
@@ -36,7 +41,18 @@ should display:
 ****
 
 */
-void stars(int n) {}
+void stars(int n) {
+    if (n <= 0) return;
+
+    // top half
+    cout << lineOfStars(n) << endl;
+
+    stars(n - 1);
+
+    // bottom half
+    cout << lineOfStars(n) << endl;
+
+}
 
 // Write a *recursive* function that will check if
 //    a string is a palindrome
@@ -44,16 +60,21 @@ void stars(int n) {}
 // Hint 2: s.substr(i,j) gives you the substring of s. For example if s = Hello, s(1,s.length()-1) gives you ello
 bool isPalindromeR(string s)
 {
-	return false;
+	if (s.length() <= 1) return true;
+
+    if (s.front() != s.back()) return false;
+
+    return isPalindromeR(s.substr(1, s.length() - 2));
+
 }
 
 
 // Write a function that will return the reverse of a string
 // The function should be recursive, you can use the substring
 //  methods from the previous function
-string reverse(string s)
-{
-	return "fixme"; 
+string reverse(string s){
+    if (s == "") return "";
+    return reverse(s.substr(1)) + s[0]; 
 }
 
 // Write a function that returns the sum of the decimal digits of n.
@@ -61,7 +82,11 @@ string reverse(string s)
 //          sumDigits(-4096) returns 19
 // You may not use a loop. Treat n as its absolute value.
 int sumDigits(int n) {
-    return -1; // fix this!
+ n = abs(n);
+
+    if (n == 0) return 0;
+
+    return (n % 10) + sumDigits(n / 10);
 }
 
 // Write a function that returns how many times x appears
@@ -69,5 +94,10 @@ int sumDigits(int n) {
 // Example: arr = {1,1,2}, n = 3, x = 1  returns 2
 // You may not use a loop.
 int countOccurrences(const int* arr, int n, int x) {
-    return -1; // fix this!
+if (n <= 0) return 0;
+
+    if (arr[n - 1] == x)
+        return 1 + countOccurrences(arr, n - 1, x);
+    else
+        return countOccurrences(arr, n - 1, x);
 }
